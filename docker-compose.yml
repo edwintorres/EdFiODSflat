@@ -1,0 +1,16 @@
+services:
+  spark-jupyter:
+    build:
+      context: ./docker
+      dockerfile: Dockerfile.spark
+    container_name: edfi_spark
+    ports:
+      - "8888:8888"
+    volumes:
+      - ./data:/workspace/data
+      - ./notebooks:/workspace/notebooks
+      - ./scripts:/workspace/scripts
+    environment:
+      - JUPYTER_TOKEN=edfi
+      - PYSPARK_PYTHON=python3
+    working_dir: /workspace

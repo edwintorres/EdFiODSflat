@@ -1,0 +1,15 @@
+FROM jupyter/pyspark-notebook:spark-3.5.0
+
+USER root
+
+# Optional OS tools
+RUN apt-get update && apt-get install -y unzip curl zip
+
+# Set working directory
+WORKDIR /workspace
+
+# Install Python packages
+RUN pip install databricks-cli
+RUN pip install pyspark
+
+USER jovyan

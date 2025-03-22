@@ -166,6 +166,35 @@ python3 ./scripts/test_pyspark_read.py || echo "⚠️ CSV test failed. Are your
 echo "🧼 Final cleanup..."
 sudo apt-get autoremove -y && sudo apt-get clean
 
+echo "🐳 Installing Docker & Docker Compose..."
+
+# Install Docker
+if ! command -v docker &> /dev/null; then
+  sudo apt-get install -y ca-certificates curl gnupg lsb-release
+  sudo mkdir -p /etc/apt/keyrings
+  curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo gpg --dearmor -o /etc/apt/keyrings/docker.gpg
+  echo \
+    "deb [arch=$(dpkg --print-architecture) signed-by=/etc/apt/keyrings/docker.gpg] https://download.docker.com/linux/ubuntu \
+    $(lsb_release -cs) stable" | sudo tee /etc/apt/sources.list.d/docker.list > /dev/null
+  sudo apt-get update -y
+  sudo apt-get install -y docker-ce docker-ce-cli containerd.io
+else
+  echo "✅ Docker already installed"
+fi
+
+# Install Docker Compose
+if ! command -v docker-compose &> /dev/null; then
+  sudo apt-get install -y docker-compose
+else
+  echo "✅ Docker Compose already installed"
+fi
+
+# Add user to docker group (no sudo needed)
+sudo usermod -aG docker $USER
+
+echo "🧃 Docker installed. You may need to restart your WSL session or run: newgrp docker"
+
+
 echo "
 ✅ INSTALLATION COMPLETE
 
@@ -175,6 +204,7 @@ echo "
 📦 Databricks CLI
 📦 PySpark
 📦 Jupyter Notebook + JupyterLab
+📦 Docker
 🧪 CSV Read Test
 
 📚 To start Jupyter Notebook:
@@ -199,4 +229,7 @@ This can break tools like Jupyter, SDKMAN, and more.
 
 📘 Fix it with this quick guide:
     /docs/fix-wsl-root-readme.md
+
+🛠 After installation, don’t forget to apply the Docker group change without rebooting WS
+    newgrp docker
 "
