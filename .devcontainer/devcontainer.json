@@ -11,5 +11,6 @@
       ]
     }
   },
-  "remoteUser": "jovyan"
+  "remoteUser": "jovyan",
+  "postCreateCommand": "pip install -r requirements.txt"
 }

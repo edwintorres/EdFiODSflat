@@ -13,6 +13,8 @@ sudo apt-get update -y && sudo apt-get upgrade -y
 echo "🐍 Installing Python 3 and pip..."
 sudo apt-get install -y python3 python3-pip
 
+pip install Jinja2
+
 echo "📦 Installing dependencies: unzip, curl, zip..."
 sudo apt-get install -y unzip curl zip
 
@@ -137,7 +139,7 @@ To launch Jupyter:
 
 
 echo "🧪 Writing PySpark verification script..."
-cat << 'EOF' > ./scripts/test_pyspark_read.py
+cat << 'EOF' > ./script/test_pyspark_read.py
 from pyspark.sql import SparkSession
 
 spark = SparkSession.builder.appName("Verify CSVs with Spark").getOrCreate()
@@ -161,7 +163,7 @@ finally:
 EOF
 
 echo "🚀 Running PySpark verification..."
-python3 ./scripts/test_pyspark_read.py || echo "⚠️ CSV test failed. Are your files in the current directory?"
+python3 ./script/test_pyspark_read.py || echo "⚠️ CSV test failed. Are your files in the current directory?"
 
 echo "🧼 Final cleanup..."
 sudo apt-get autoremove -y && sudo apt-get clean
@@ -209,7 +211,7 @@ echo "
 
 📚 To start Jupyter Notebook:
     cd ~/your/project/path
-    jupyter notebook --no-browser --ip=127.0.0.1 --port=8888
+    jupyter notebooks --no-browser --ip=127.0.0.1 --port=8888
 
 📚 Or to use the modern interface:
     jupyter lab

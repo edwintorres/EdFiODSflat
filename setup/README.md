@@ -153,3 +153,7 @@ This will:
 ---
 
 Happy coding! 💥
+
+
+---
+sudo chown -R etorr:etorr /home/etorr/repos/EdFiODSflat

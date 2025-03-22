@@ -1,6 +1,12 @@
 spark-3.5.0-bin-hadoop3
 spark-3.5.0-bin-hadoop3.tgz.1
 
+# 🟫 Ignore all bronze output tables
+data/bronze/
+
+# 🟫 Ignore all bronze output tables inside spark-warehouse
+spark-warehouse/
+
 # Remove Windows NTFS metadata junk
 *.Zone.Identifier
 

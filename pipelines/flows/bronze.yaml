@@ -1,0 +1,23 @@
+pipeline_name: edfi_flat_bronze_only
+log_to_azure: false
+
+groups:
+  - parallel: false
+    steps:
+      - name: bronze_load
+        type: sql
+        script: bronze_ingest.sql
+        max_retries: 3
+        pre_view:
+          name: student_raw
+          path: data/edfi_student.csv
+          format: csv
+          options:
+            header: true
+            inferSchema: true
+        output_path: data/bronze/bronze_students
+        dq_checks:
+          - query: "SELECT COUNT(*) FROM parquet.`data/bronze/bronze_students`"
+            operator: ">"
+            expected: 0
+
