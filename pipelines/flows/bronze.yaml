@@ -1,4 +1,8 @@
 pipeline_name: edfi_flat_bronze_only
+batch_id: # omit to let pipeline auto-generate
+checkpoint:
+  enabled: true
+  path: "{{base_path}}/_checkpoints/{{pipeline_name}}"
 log_to_azure: false
 
 groups:
