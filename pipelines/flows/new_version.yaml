@@ -1,0 +1,160 @@
+pipeline:
+  name: edfi_etl_pipeline  # Unique name for this entire pipeline run
+  description: "End-to-end ETL pipeline using Medallion Architecture with Data Vault and Star Schema"  # Quick summary of what this pipeline does
+
+  default_retry:
+    attempts: 3            # Retry failed steps up to 3 times
+    delay_seconds: 10      # Wait 10 seconds between retries
+
+  notifications:
+    on_failure: slack://#data-alerts    # Where to scream if something fails
+    on_success: slack://#data-success   # Where to celebrate success (optional, but cute)
+
+  checkpoint:
+    enabled: true
+    path: "{{base_path}}/_checkpoints/{{pipeline.name}}"  # Where to store state/progress so restarts can resume intelligently
+
+  stages:  # Top-level ETL layers (Bronze, Silver, Gold)
+    - name: bronze
+      description: "Raw ingestion from SQL Server to Delta Lake"
+      parallel: true             # Steps in this stage can run in parallel
+      depends_on: []             # This is the first stage—no upstream dependencies
+
+      groups:
+        - name: ingestion        # Logical group within the bronze stage
+          parallel: true         # These steps can also run in parallel
+          depends_on: []         # No dependencies—it's the start of the flow
+
+          steps:
+            - name: students
+              depends_on: []     # Doesn't depend on any other step
+              source:
+                type: jdbc       # This is a JDBC read from SQL Server
+                connection: sqlserver_edfi
+                table: dbo.Students
+                query: "sql/{{stage.name}}/{{name}}.sql"   # External SQL file (templated for reusability)
+              destination:
+                format: delta
+                path: "{{base_path}}/{{stage.name}}/{{name}}"  # Where to write the data in the lake
+              dq_checks:  # Data quality validations to run post-write
+                - "dq/{{stage.name}}/{{name}}/row_count.sql"
+                - "dq/{{stage.name}}/{{name}}/not_null_studentid.sql"
+
+            - name: schools
+              depends_on: []     # Also independent
+              source:
+                type: jdbc
+                connection: sqlserver_edfi
+                table: dbo.Schools
+                query: "sql/{{stage.name}}/{{name}}.sql"
+              destination:
+                format: delta
+                path: "{{base_path}}/{{stage.name}}/{{name}}"
+              dq_checks:
+                - "dq/{{stage.name}}/{{name}}/row_count.sql"
+
+    - name: silver
+      description: "Refined Data Vault modeling"
+      parallel: false            # We'll run these groups sequentially
+      depends_on: [bronze]       # Wait until bronze finishes
+
+      groups:
+        - name: hubs
+          parallel: true         # Hubs can be built in parallel
+          depends_on: [bronze]   # Depends on raw data being ingested
+
+          steps:
+            - name: hub_student
+              depends_on: [students]  # Needs student data ingested
+              source:
+                type: delta
+                query: "sql/{{stage.name}}/{{name}}.sql"
+              destination:
+                format: delta
+                path: "{{base_path}}/{{stage.name}}/{{name}}"
+              dq_checks:
+                - "dq/{{stage.name}}/{{name}}/unique_keys.sql"
+
+            - name: hub_school
+              depends_on: [schools]
+              source:
+                type: delta
+                query: "sql/{{stage.name}}/{{name}}.sql"
+              destination:
+                format: delta
+                path: "{{base_path}}/{{stage.name}}/{{name}}"
+
+        - name: links
+          parallel: true
+          depends_on: [hubs]     # Wait until all hubs are built
+
+          steps:
+            - name: link_enrollment
+              depends_on: [hub_student, hub_school]  # Join step needs both hubs
+              source:
+                type: delta
+                query: "sql/{{stage.name}}/{{name}}.sql"
+              destination:
+                format: delta
+                path: "{{base_path}}/{{stage.name}}/{{name}}"
+
+        - name: satellites
+          parallel: true
+          depends_on: [links]    # Satellites extend the links, so wait for them
+
+          steps:
+            - name: sat_student_demographics
+              depends_on: [link_enrollment]
+              source:
+                type: delta
+                query: "sql/{{stage.name}}/{{name}}.sql"
+              destination:
+                format: delta
+                path: "{{base_path}}/{{stage.name}}/{{name}}"
+
+    - name: gold
+      description: "Star Schema for reporting"
+      parallel: false
+      depends_on: [silver]       # Wait until silver layer is fully built
+
+      groups:
+        - name: dimensions
+          parallel: true
+          depends_on: [satellites]  # Dimensions are built from refined satellite data
+
+          steps:
+            - name: dim_student
+              depends_on: [sat_student_demographics]  # This fact depends on enriched student data
+              source:
+                type: delta
+                query: "sql/{{stage.name}}/{{name}}.sql"
+              destination:
+                format: delta
+                path: "{{base_path}}/{{stage.name}}/{{name}}"
+              dq_checks:
+                - "dq/{{stage.name}}/{{name}}/not_null_dim_id.sql"
+
+            - name: dim_school
+              depends_on: [hub_school]  # Directly built from school hub
+              source:
+                type: delta
+                query: "sql/{{stage.name}}/{{name}}.sql"
+              destination:
+                format: delta
+                path: "{{base_path}}/{{stage.name}}/{{name}}"
+
+        - name: facts
+          parallel: true
+          depends_on: [dimensions]  # Facts are last—they depend on dimensions
+
+          steps:
+            - name: fact_enrollment
+              depends_on: [dim_student, dim_school]  # Classic star schema join
+              source:
+                type: delta
+                query: "sql/{{stage.name}}/{{name}}.sql"
+              destination:
+                format: delta
+                path: "{{base_path}}/{{stage.name}}/{{name}}"
+              dq_checks:
+                - "dq/{{stage.name}}/{{name}}/valid_dates.sql"

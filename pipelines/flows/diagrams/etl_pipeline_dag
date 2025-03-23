@@ -1,0 +1,53 @@
+// edfi_etl_pipeline
+digraph {
+	rankdir=LR size="8,5"
+	bronze [fillcolor=lightblue shape=box style=filled]
+	"bronze.ingestion" [fillcolor=lightyellow shape=box style=filled]
+	bronze -> "bronze.ingestion"
+	"bronze.students" [fillcolor=white shape=ellipse style=filled]
+	"bronze.ingestion" -> "bronze.students"
+	"bronze.schools" [fillcolor=white shape=ellipse style=filled]
+	"bronze.ingestion" -> "bronze.schools"
+	silver [fillcolor=lightblue shape=box style=filled]
+	bronze -> silver
+	"silver.hubs" [fillcolor=lightyellow shape=box style=filled]
+	silver -> "silver.hubs"
+	"silver.bronze" -> "silver.hubs"
+	"silver.hub_student" [fillcolor=white shape=ellipse style=filled]
+	"silver.hubs" -> "silver.hub_student"
+	"bronze.students" -> "silver.hub_student"
+	"silver.hub_school" [fillcolor=white shape=ellipse style=filled]
+	"silver.hubs" -> "silver.hub_school"
+	"bronze.schools" -> "silver.hub_school"
+	"silver.links" [fillcolor=lightyellow shape=box style=filled]
+	silver -> "silver.links"
+	"silver.hubs" -> "silver.links"
+	"silver.link_enrollment" [fillcolor=white shape=ellipse style=filled]
+	"silver.links" -> "silver.link_enrollment"
+	"silver.hub_student" -> "silver.link_enrollment"
+	"silver.hub_school" -> "silver.link_enrollment"
+	"silver.satellites" [fillcolor=lightyellow shape=box style=filled]
+	silver -> "silver.satellites"
+	"silver.links" -> "silver.satellites"
+	"silver.sat_student_demographics" [fillcolor=white shape=ellipse style=filled]
+	"silver.satellites" -> "silver.sat_student_demographics"
+	"silver.link_enrollment" -> "silver.sat_student_demographics"
+	gold [fillcolor=lightblue shape=box style=filled]
+	silver -> gold
+	"gold.dimensions" [fillcolor=lightyellow shape=box style=filled]
+	gold -> "gold.dimensions"
+	"gold.satellites" -> "gold.dimensions"
+	"gold.dim_student" [fillcolor=white shape=ellipse style=filled]
+	"gold.dimensions" -> "gold.dim_student"
+	"silver.sat_student_demographics" -> "gold.dim_student"
+	"gold.dim_school" [fillcolor=white shape=ellipse style=filled]
+	"gold.dimensions" -> "gold.dim_school"
+	"silver.hub_school" -> "gold.dim_school"
+	"gold.facts" [fillcolor=lightyellow shape=box style=filled]
+	gold -> "gold.facts"
+	"gold.dimensions" -> "gold.facts"
+	"gold.fact_enrollment" [fillcolor=white shape=ellipse style=filled]
+	"gold.facts" -> "gold.fact_enrollment"
+	"gold.dim_student" -> "gold.fact_enrollment"
+	"gold.dim_school" -> "gold.fact_enrollment"
+}
