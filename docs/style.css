@@ -1,0 +1,58 @@
+body {
+    font-family: Arial, sans-serif;
+    font-size: 12px;
+    line-height: 1.6;
+    color: #333;
+    padding: 20px;
+}
+
+h1, h2, h3 {
+    color: #2C3E50;
+}
+
+h1, h2, h3 {
+    margin-top: 1.2em;
+    margin-bottom: 0.5em;
+}
+p, ul, table {
+    margin-bottom: 1em;
+}
+
+code {
+    font-family: monospace;
+    background-color: #f4f4f4;
+    padding: 2px 5px;
+    border-radius: 3px;
+}
+
+ul {
+    padding-left: 20px; /* Increase left padding for better nesting */
+}
+ul ul {
+    margin-left: 20px; /* Ensures sub-bullets are indented */
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-bottom: 1.5em;
+}
+th, td {
+    border: 1px solid #ddd;
+    padding: 8px;
+    text-align: left;
+}
+th {
+    background-color: #f4f4f4;
+    color: #333;
+}
+
+pre, code {
+    font-family: 'Courier New', monospace;
+    background-color: #f0f0f0;
+    padding: 10px;
+    border-radius: 5px;
+}
+pre {
+    overflow-x: auto; /* Prevents horizontal overflow */
+}
