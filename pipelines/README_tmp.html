@@ -1,0 +1,1217 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>README.md</title>
+<meta http-equiv="Content-type" content="text/html;charset=UTF-8">
+
+<style>
+/* https://github.com/microsoft/vscode/blob/master/extensions/markdown-language-features/media/markdown.css */
+/*---------------------------------------------------------------------------------------------
+ *  Copyright (c) Microsoft Corporation. All rights reserved.
+ *  Licensed under the MIT License. See License.txt in the project root for license information.
+ *--------------------------------------------------------------------------------------------*/
+
+body {
+	font-family: var(--vscode-markdown-font-family, -apple-system, BlinkMacSystemFont, "Segoe WPC", "Segoe UI", "Ubuntu", "Droid Sans", sans-serif);
+	font-size: var(--vscode-markdown-font-size, 14px);
+	padding: 0 26px;
+	line-height: var(--vscode-markdown-line-height, 22px);
+	word-wrap: break-word;
+}
+
+#code-csp-warning {
+	position: fixed;
+	top: 0;
+	right: 0;
+	color: white;
+	margin: 16px;
+	text-align: center;
+	font-size: 12px;
+	font-family: sans-serif;
+	background-color:#444444;
+	cursor: pointer;
+	padding: 6px;
+	box-shadow: 1px 1px 1px rgba(0,0,0,.25);
+}
+
+#code-csp-warning:hover {
+	text-decoration: none;
+	background-color:#007acc;
+	box-shadow: 2px 2px 2px rgba(0,0,0,.25);
+}
+
+body.scrollBeyondLastLine {
+	margin-bottom: calc(100vh - 22px);
+}
+
+body.showEditorSelection .code-line {
+	position: relative;
+}
+
+body.showEditorSelection .code-active-line:before,
+body.showEditorSelection .code-line:hover:before {
+	content: "";
+	display: block;
+	position: absolute;
+	top: 0;
+	left: -12px;
+	height: 100%;
+}
+
+body.showEditorSelection li.code-active-line:before,
+body.showEditorSelection li.code-line:hover:before {
+	left: -30px;
+}
+
+.vscode-light.showEditorSelection .code-active-line:before {
+	border-left: 3px solid rgba(0, 0, 0, 0.15);
+}
+
+.vscode-light.showEditorSelection .code-line:hover:before {
+	border-left: 3px solid rgba(0, 0, 0, 0.40);
+}
+
+.vscode-light.showEditorSelection .code-line .code-line:hover:before {
+	border-left: none;
+}
+
+.vscode-dark.showEditorSelection .code-active-line:before {
+	border-left: 3px solid rgba(255, 255, 255, 0.4);
+}
+
+.vscode-dark.showEditorSelection .code-line:hover:before {
+	border-left: 3px solid rgba(255, 255, 255, 0.60);
+}
+
+.vscode-dark.showEditorSelection .code-line .code-line:hover:before {
+	border-left: none;
+}
+
+.vscode-high-contrast.showEditorSelection .code-active-line:before {
+	border-left: 3px solid rgba(255, 160, 0, 0.7);
+}
+
+.vscode-high-contrast.showEditorSelection .code-line:hover:before {
+	border-left: 3px solid rgba(255, 160, 0, 1);
+}
+
+.vscode-high-contrast.showEditorSelection .code-line .code-line:hover:before {
+	border-left: none;
+}
+
+img {
+	max-width: 100%;
+	max-height: 100%;
+}
+
+a {
+	text-decoration: none;
+}
+
+a:hover {
+	text-decoration: underline;
+}
+
+a:focus,
+input:focus,
+select:focus,
+textarea:focus {
+	outline: 1px solid -webkit-focus-ring-color;
+	outline-offset: -1px;
+}
+
+hr {
+	border: 0;
+	height: 2px;
+	border-bottom: 2px solid;
+}
+
+h1 {
+	padding-bottom: 0.3em;
+	line-height: 1.2;
+	border-bottom-width: 1px;
+	border-bottom-style: solid;
+}
+
+h1, h2, h3 {
+	font-weight: normal;
+}
+
+table {
+	border-collapse: collapse;
+}
+
+table > thead > tr > th {
+	text-align: left;
+	border-bottom: 1px solid;
+}
+
+table > thead > tr > th,
+table > thead > tr > td,
+table > tbody > tr > th,
+table > tbody > tr > td {
+	padding: 5px 10px;
+}
+
+table > tbody > tr + tr > td {
+	border-top: 1px solid;
+}
+
+blockquote {
+	margin: 0 7px 0 5px;
+	padding: 0 16px 0 10px;
+	border-left-width: 5px;
+	border-left-style: solid;
+}
+
+code {
+	font-family: Menlo, Monaco, Consolas, "Droid Sans Mono", "Courier New", monospace, "Droid Sans Fallback";
+	font-size: 1em;
+	line-height: 1.357em;
+}
+
+body.wordWrap pre {
+	white-space: pre-wrap;
+}
+
+pre:not(.hljs),
+pre.hljs code > div {
+	padding: 16px;
+	border-radius: 3px;
+	overflow: auto;
+}
+
+pre code {
+	color: var(--vscode-editor-foreground);
+	tab-size: 4;
+}
+
+/** Theming */
+
+.vscode-light pre {
+	background-color: rgba(220, 220, 220, 0.4);
+}
+
+.vscode-dark pre {
+	background-color: rgba(10, 10, 10, 0.4);
+}
+
+.vscode-high-contrast pre {
+	background-color: rgb(0, 0, 0);
+}
+
+.vscode-high-contrast h1 {
+	border-color: rgb(0, 0, 0);
+}
+
+.vscode-light table > thead > tr > th {
+	border-color: rgba(0, 0, 0, 0.69);
+}
+
+.vscode-dark table > thead > tr > th {
+	border-color: rgba(255, 255, 255, 0.69);
+}
+
+.vscode-light h1,
+.vscode-light hr,
+.vscode-light table > tbody > tr + tr > td {
+	border-color: rgba(0, 0, 0, 0.18);
+}
+
+.vscode-dark h1,
+.vscode-dark hr,
+.vscode-dark table > tbody > tr + tr > td {
+	border-color: rgba(255, 255, 255, 0.18);
+}
+
+</style>
+
+<style>
+/* Tomorrow Theme */
+/* http://jmblog.github.com/color-themes-for-google-code-highlightjs */
+/* Original theme - https://github.com/chriskempson/tomorrow-theme */
+
+/* Tomorrow Comment */
+.hljs-comment,
+.hljs-quote {
+	color: #8e908c;
+}
+
+/* Tomorrow Red */
+.hljs-variable,
+.hljs-template-variable,
+.hljs-tag,
+.hljs-name,
+.hljs-selector-id,
+.hljs-selector-class,
+.hljs-regexp,
+.hljs-deletion {
+	color: #c82829;
+}
+
+/* Tomorrow Orange */
+.hljs-number,
+.hljs-built_in,
+.hljs-builtin-name,
+.hljs-literal,
+.hljs-type,
+.hljs-params,
+.hljs-meta,
+.hljs-link {
+	color: #f5871f;
+}
+
+/* Tomorrow Yellow */
+.hljs-attribute {
+	color: #eab700;
+}
+
+/* Tomorrow Green */
+.hljs-string,
+.hljs-symbol,
+.hljs-bullet,
+.hljs-addition {
+	color: #718c00;
+}
+
+/* Tomorrow Blue */
+.hljs-title,
+.hljs-section {
+	color: #4271ae;
+}
+
+/* Tomorrow Purple */
+.hljs-keyword,
+.hljs-selector-tag {
+	color: #8959a8;
+}
+
+.hljs {
+	display: block;
+	overflow-x: auto;
+	color: #4d4d4c;
+	padding: 0.5em;
+}
+
+.hljs-emphasis {
+	font-style: italic;
+}
+
+.hljs-strong {
+	font-weight: bold;
+}
+</style>
+
+<style>
+/*
+ * Markdown PDF CSS
+ */
+
+ body {
+	font-family: -apple-system, BlinkMacSystemFont, "Segoe WPC", "Segoe UI", "Ubuntu", "Droid Sans", sans-serif, "Meiryo";
+	padding: 0 12px;
+}
+
+pre {
+	background-color: #f8f8f8;
+	border: 1px solid #cccccc;
+	border-radius: 3px;
+	overflow-x: auto;
+	white-space: pre-wrap;
+	overflow-wrap: break-word;
+}
+
+pre:not(.hljs) {
+	padding: 23px;
+	line-height: 19px;
+}
+
+blockquote {
+	background: rgba(127, 127, 127, 0.1);
+	border-color: rgba(0, 122, 204, 0.5);
+}
+
+.emoji {
+	height: 1.4em;
+}
+
+code {
+	font-size: 14px;
+	line-height: 19px;
+}
+
+/* for inline code */
+:not(pre):not(.hljs) > code {
+	color: #C9AE75; /* Change the old color so it seems less like an error */
+	font-size: inherit;
+}
+
+/* Page Break : use <div class="page"/> to insert page break
+-------------------------------------------------------- */
+.page {
+	page-break-after: always;
+}
+
+</style>
+
+<script src="https://unpkg.com/mermaid/dist/mermaid.min.js"></script>
+</head>
+<body>
+  <script>
+    mermaid.initialize({
+      startOnLoad: true,
+      theme: document.body.classList.contains('vscode-dark') || document.body.classList.contains('vscode-high-contrast')
+          ? 'dark'
+          : 'default'
+    });
+  </script>
+<h1 id="etl-pipeline-project-structure-explained">ETL Pipeline Project Structure Explained</h1>
+<p>This document provides a detailed explanation of the ETL pipeline project structure. It outlines every component of the project, what it does, and how everything fits together to create a robust, flexible data processing pipeline.</p>
+<hr>
+<h2 id="table-of-contents">Table of Contents</h2>
+<ul>
+<li><a href="#1-overview">1. Overview</a></li>
+<li><a href="#2-project-structure">2. Project Structure</a>
+<ul>
+<li><a href="#21-pipelines-directory">2.1. <code>pipelines/</code> Directory</a></li>
+<li><a href="#22-sql-directory">2.2. <code>sql/</code> Directory</a></li>
+<li><a href="#23-dq-directory">2.3. <code>dq/</code> Directory</a></li>
+<li><a href="#24-ingestion-directory">2.4. <code>ingestion/</code> Directory</a></li>
+<li><a href="#25-tests-directory">2.5. <code>tests/</code> Directory</a></li>
+</ul>
+</li>
+<li><a href="#3-files-structure">3. Files Structure</a></li>
+<li><a href="#4-example-main_flowyaml">4. Example: <code>main_flow.yaml</code></a></li>
+<li><a href="#5-roadmap">5. Roadmap</a></li>
+<li><a href="#6-conclusion">6. Conclusion</a></li>
+</ul>
+<hr>
+<h2 id="1-overview">1. Overview</h2>
+<p>The project is organized to separate concerns clearly, from pipeline orchestration to SQL templating and data quality checks. This modularity makes it easier to manage, test, and extend the pipeline. The project supports multiple layers (bronze, silver, gold) for data ingestion, transformation, and reporting, following best practices such as Data Vault modeling and star schema for analytics.</p>
+<hr>
+<h2 id="2-project-structure">2. Project Structure</h2>
+<h3 id="21-pipelines-directory">2.1. <code>pipelines/</code> Directory</h3>
+<p>This folder contains the core orchestration scripts and utilities that manage the ETL workflow.</p>
+<ul>
+<li>
+<p><strong><code>pipeline.py</code></strong><br>
+<em>Primary orchestration script:</em></p>
+<ul>
+<li>Traverses the YAML configuration (stages → groups → steps).</li>
+<li>Manages both parallel and sequential execution.</li>
+<li>Implements retry logic and logs each step’s performance.</li>
+<li>Calls data quality (DQ) checks as needed.</li>
+<li>Supports multiple pre-step views with a list (<code>pre_views</code>) to register temporary tables, useful for lookups or joins in SQL.</li>
+</ul>
+</li>
+<li>
+<p><strong><code>run_pipeline.py</code></strong><br>
+<em>Entry-point / CLI script:</em></p>
+<ul>
+<li>Boots up Spark (if using PySpark).</li>
+<li>Loads the <code>pipelines_config.yaml</code>.</li>
+<li>Instantiates and runs the pipeline.</li>
+<li>Saves final execution logs to JSON.</li>
+<li>Optionally uploads logs or writes metadata to Delta via utility modules.</li>
+</ul>
+</li>
+<li>
+<p><strong><code>flows/main_flow.yaml</code></strong><br>
+<em>YAML-based pipeline definition:</em></p>
+<ul>
+<li>Describes the complete DAG, including stages, groups, step dependencies, parallelism, and retries.</li>
+<li>Acts as the single source of truth for pipeline orchestration.</li>
+<li>Allows flexible reconfiguration without touching the code.</li>
+<li>Supports reusable SQL templates, DQ checks, and conditional step logic.</li>
+<li>Can be extended to include notifications, checkpoints, secrets, and more.</li>
+</ul>
+</li>
+<li>
+<p><strong><code>pipelines/flows/visualize_pipeline_dag.py</code></strong><br>
+<em>This Python script helps you visualize the pipeline's Directed Acyclic Graph (DAG) based on your YAML configuration. It leverages:</em></p>
+<ul>
+<li>
+<p><strong>PyYAML</strong> for parsing YAML.</p>
+</li>
+<li>
+<p><strong>Graphviz</strong> to build and render the DAG.</p>
+</li>
+<li>
+<p>The script processes the pipeline definition and generates both PDF and PNG visualizations, making it easier to understand step dependencies and flow structure.</p>
+<pre class="hljs"><code><div><span class="hljs-comment">## Usage &amp; Requirements</span>
+
+<span class="hljs-comment">## 1. Install Required Libraries</span>
+pip install pyyaml graphviz
+
+<span class="hljs-comment">## 2. On Linux (wsl), ensure Graphviz is installed:</span>
+sudo apt update &amp;&amp; sudo apt install graphviz xdg-utils
+
+<span class="hljs-comment">## 3. Run the script directly:</span>
+pip install pyyaml graphviz
+</div></code></pre>
+</li>
+</ul>
+</li>
+<li>
+<p><strong><code>logs/pipeline_log.json</code></strong><br>
+<em>Central logging output (JSON):</em></p>
+<ul>
+<li>Captures each step’s success/failure, timing, retry counts, etc.</li>
+<li>Useful for post-run analysis, troubleshooting, or performance metrics.</li>
+</ul>
+</li>
+<li>
+<p><strong><code>utils/</code> Directory</strong><br>
+Contains helper modules to support SQL operations, data quality checks, metadata logging, and datasource management.</p>
+<ul>
+<li>
+<p><strong><code>sql_loader.py</code></strong><br>
+<em>Jinja2-based SQL rendering:</em></p>
+<ul>
+<li>Loads <code>.sql</code> files from disk and renders them with dynamic parameters.</li>
+<li>Injects custom contexts such as step name, batch ID, and temporary views.</li>
+<li>Promotes clean separation of SQL logic from Python orchestration code.</li>
+<li>Supports templating for table/view names in SQL scripts.</li>
+</ul>
+</li>
+<li>
+<p><strong><code>sql_runner.py</code></strong><br>
+<em>Spark SQL execution module:</em></p>
+<ul>
+<li>Executes rendered SQL strings in Spark.</li>
+<li>Optionally writes results to a destination (Delta, Parquet, etc.).</li>
+<li>Returns row count or success status for logging and validation.</li>
+<li>Supports output as a Spark temporary view for downstream steps.</li>
+<li>Pre-validates SQL syntax using Spark's parser to catch errors early.</li>
+<li>Optionally outputs logical/physical plans for debugging.</li>
+<li>Supports dynamic write options specified in YAML.</li>
+</ul>
+</li>
+<li>
+<p><strong><code>dq_checks.py</code></strong><br>
+<em>Data Quality (DQ) checks module:</em></p>
+<ul>
+<li>Runs SQL queries from the DQ folder (e.g., <code>row_count.sql</code>) to validate data quality.</li>
+<li>Raises exceptions if quality thresholds aren’t met.</li>
+</ul>
+</li>
+<li>
+<p><strong><code>metadata_logger.py</code></strong><br>
+<em>Pipeline metadata logging:</em></p>
+<ul>
+<li>Stores pipeline run logs (the same JSON logs) into Delta tables if needed.</li>
+</ul>
+</li>
+<li>
+<p><strong><code>datasource.py</code></strong><br>
+<em>DataSource management:</em></p>
+<ul>
+<li>Centralizes connection configurations (connection string, username, password, etc.).</li>
+<li>Facilitates integration with secrets managers or environment variable injection.</li>
+<li>Generates Spark-compatible configurations for JDBC or other data sources.</li>
+</ul>
+</li>
+<li>
+<p><strong><code>__init__.py</code></strong></p>
+<ul>
+<li>Marks the <code>utils/</code> folder as an importable Python package.</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<hr>
+<h3 id="22-sql-directory">2.2. <code>sql/</code> Directory</h3>
+<p>Houses all SQL scripts, organized by layer:</p>
+<ul>
+<li>
+<p><strong>Bronze Layer (<code>sql/bronze/</code>):</strong><br>
+Contains raw ingestion SQL scripts.</p>
+<ul>
+<li><strong><code>students.sql</code></strong> and <strong><code>schools.sql</code></strong>:
+<ul>
+<li>Pull data directly from source systems (like JDBC databases).</li>
+<li>Apply lightweight transformations (e.g., renaming columns, filtering records).</li>
+<li>Assumes data is registered as temporary views for further processing.</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>
+<p><strong>Silver Layer (<code>sql/silver/</code>):</strong><br>
+Contains SQL scripts for Data Vault modeling.</p>
+<ul>
+<li><strong>Data Vault Scripts (e.g., <code>hub_student.sql</code>, <code>link_enrollment.sql</code>, <code>sat_student_demographics.sql</code>):</strong>
+<ul>
+<li>Deduplicate keys, establish relationships, and build satellites.</li>
+<li>Use techniques like <code>MERGE INTO</code> or <code>INSERT INTO SELECT DISTINCT</code> to maintain data integrity.</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>
+<p><strong>Gold Layer (<code>sql/gold/</code>):</strong><br>
+Contains SQL scripts for reporting.</p>
+<ul>
+<li><strong>Star Schema Scripts (e.g., <code>dim_student.sql</code>, <code>dim_school.sql</code>, <code>fact_enrollment.sql</code>):</strong>
+<ul>
+<li>Transform and flatten Data Vault models into reporting-friendly structures.</li>
+<li>Include surrogate key generation, aggregations, and business logic.</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<hr>
+<h3 id="23-dq-directory">2.3. <code>dq/</code> Directory</h3>
+<p>Organized by layer, this directory contains SQL files for data quality checks:</p>
+<ul>
+<li>
+<p><strong>Bronze DQ:</strong></p>
+<ul>
+<li>Example: <code>students/row_count.sql</code> and <code>students/not_null_studentid.sql</code> check basic conditions like row counts and non-null constraints.</li>
+</ul>
+</li>
+<li>
+<p><strong>Silver DQ:</strong></p>
+<ul>
+<li>Example: <code>hub_student/unique_keys.sql</code> ensures the uniqueness of business keys.</li>
+</ul>
+</li>
+<li>
+<p><strong>Gold DQ:</strong></p>
+<ul>
+<li>Example: <code>dim_student/not_null_dim_id.sql</code> validates critical fields needed for downstream joins.</li>
+<li>Additional checks like <code>fact_enrollment/valid_dates.sql</code> ensure logical consistency (e.g., start date should be before end date).</li>
+</ul>
+</li>
+</ul>
+<hr>
+<h3 id="24-ingestion-directory">2.4. <code>ingestion/</code> Directory</h3>
+<p>Contains scripts for data extraction and transformation across layers:</p>
+<ul>
+<li>
+<p><strong>Bronze:</strong></p>
+<ul>
+<li><strong><code>extract_students_jdbc.py</code></strong>:
+<ul>
+<li>Extracts raw data (e.g., Ed-Fi <code>students</code> table) via JDBC.</li>
+<li>Writes data to Delta format in the raw data layer.</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>
+<p><strong>Silver:</strong></p>
+<ul>
+<li><strong><code>transform_hub_student.py</code></strong>:
+<ul>
+<li>Reads raw data from Bronze.</li>
+<li>Applies Data Vault hub logic to extract and deduplicate business keys.</li>
+<li>Prepares data for merging into the hub table.</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>
+<p><strong>Gold:</strong></p>
+<ul>
+<li><strong><code>build_dim_student_profile.py</code></strong>:
+<ul>
+<li>Joins silver layer outputs to create a dimension for reporting.</li>
+<li>Flattens data and computes derived fields (e.g., full name, status).</li>
+<li>Suitable for BI tools like Power BI or Looker.</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<hr>
+<h3 id="25-tests-directory">2.5. <code>tests/</code> Directory</h3>
+<p>A suite of unit tests to ensure every component works as expected.</p>
+<ul>
+<li>
+<p><strong><code>test_dq.py</code></strong></p>
+<ul>
+<li>Tests the DQ checks by simulating Spark sessions.</li>
+<li>Verifies behavior for both passing and failing quality checks.</li>
+</ul>
+</li>
+<li>
+<p><strong><code>test_retry.py</code></strong></p>
+<ul>
+<li>Mocks step functions to simulate random failures.</li>
+<li>Ensures retry logic and logging are functioning correctly.</li>
+</ul>
+</li>
+<li>
+<p><strong><code>test_sql_loader.py</code></strong></p>
+<ul>
+<li>Validates Jinja2 SQL rendering.</li>
+<li>Checks proper substitution of variables and error handling for missing or malformed templates.</li>
+</ul>
+</li>
+<li>
+<p><strong><code>test_checkpoints.py</code></strong></p>
+<ul>
+<li>Tests checkpointing functionality.</li>
+<li>Verifies marker file creation and behavior when steps are skipped due to checkpoint presence.</li>
+</ul>
+</li>
+<li>
+<p><strong><code>test_batch_id.py</code></strong></p>
+<ul>
+<li>Validates batch ID generation.</li>
+<li>Checks consistency across pipeline runs and proper fallback to timestamp-based IDs.</li>
+</ul>
+</li>
+<li>
+<p><strong><code>test_pipeline_structure.py</code></strong></p>
+<ul>
+<li>Ensures the YAML pipeline definition adheres to the required schema.</li>
+<li>Catches common configuration errors before deployment.</li>
+</ul>
+</li>
+<li>
+<p><strong><code>__init__.py</code></strong></p>
+<ul>
+<li>Marks the <code>tests/</code> folder as an importable test package.</li>
+<li>Enables discovery of tests using pytest or similar frameworks.</li>
+</ul>
+</li>
+</ul>
+<hr>
+<h2 id="3-files-structure">3. Files Structure</h2>
+<p>This section offers a bird's-eye view of the entire project file system, organized like a treasure map leading you to all the essential components of your ETL pipeline. You'll see clearly defined directories for your pipeline orchestration scripts, SQL logic (spread across Bronze, Silver, and Gold layers), data quality checks, ingestion scripts, and tests. Each folder is purpose-built to keep your code modular, maintainable, and ready to scale. It's like having a backstage pass to the inner workings of your data pipeline—now you know exactly where every crucial piece of your project lives.</p>
+<pre class="hljs"><code><div>.
+├── pipelines/
+│   ├── pipeline.py
+│   │   ├─ (1) Primary orchestration script:
+│   │   │      - Defines how to traverse the YAML config (stages → groups → steps).
+│   │   │      - Manages parallel vs. sequential execution.
+│   │   │      - Implements retry logic &amp; logging for each step.
+│   │   │      - Calls data quality checks when needed.
+│   │   │      - Supports multiple pre-step views using a list (`pre_views`) to register multiple temp tables before executing SQL. 
+│   │   │            - This is useful for lookups or joins, for example when building facts.
+│   ├── run_pipeline.py
+│   │   ├─ (2) Entry-point / CLI script:
+│   │   │      - Boots up Spark (if you’re using PySpark).
+│   │   │      - Loads `pipelines_config.yaml`.
+│   │   │      - Instantiates and runs the pipeline.
+│   │   │      - Saves final execution logs to JSON.
+│   │   │      - Optionally uploads logs or writes metadata to Delta via utility modules.
+│   ├── flows/
+│   │   └── main_flow.yaml
+│   │       ├─ (3) YAML-based pipeline definition:
+│   │       │      - Describes the complete DAG: stages, groups, step dependencies, parallelism, retries, etc.
+│   │       │      - Acts as the single source of truth for pipeline orchestration.
+│   │       │      - Allows flexible reconfiguration without touching code.
+│   │       │      - Supports reusable SQL templates, DQ checks, and conditional step logic.
+│   │       │      - Can be extended to include notifications, checkpoints, secrets, and more.
+│   ├── logs/
+│   │   └── pipeline_log.json
+│   │       ├─ (4) Central logging output (JSON):
+│   │       │      - Captures each step’s success/failure, timing, number of retries, etc.
+│   │       │      - Useful for post-run analysis, troubleshooting, or metrics.
+│   └── utils/
+│       ├── sql_loader.py
+│       │   ├─ (5) Jinja2-based SQL rendering:
+│       │   │      - Loads `.sql` files from disk using Jinja2 templating.
+│       │   │      - Supports custom context injection: step name, batch ID, temp views, etc.
+│       │   │      - Promotes clean separation of SQL logic from Python orchestration code.
+│       │   │      - Used by each step to dynamically prepare the Spark SQL query to run.
+│       │   │      - Supports table/view templating like: `SELECT * FROM {{ pre_view_name }}`
+│       ├── sql_runner.py
+│       │   ├─ (6) Spark SQL execution:
+│       │   │      - Accepts a fully rendered SQL string and runs it in Spark.
+│       │   │      - Optionally writes results to a destination path (Delta, Parquet, etc.).
+│       │   │      - Returns row count or success status for logging and validation.
+│       │   │      - Supports output as a Spark temporary view for chained downstream steps.
+│       │   │      - Pre-validates SQL syntax using Spark's parser before execution to catch issues early.
+│       │   │            - Use spark.sessionState.sqlParser.parsePlan(sql_text) to validate SQL before runtime.
+│       │   │            - Helpful for debugging complex SQLs or validating template rendering.
+│       │   │      - Optionally calls `.explain()` on the DataFrame to output the logical/physical plan.
+│       │   │            - Useful for understanding performance or Spark optimizations.
+│       │   │            - Could be controlled with a flag: debug: true in the YAML step.
+│       │   │      - Supports dynamic write options (format, path, mode) from YAML.
+│       │   │            - Could be controlled in the YAML with parameters like format (e.g., delta, parquet, json)
+│       │   │                  - format (e.g., delta, parquet, json)
+│       │   │                  - path (e.g., /mnt/output# Where to write the result)
+│       │   │                  - mode (e.g., Spark write mode (overwrite, append, etc.))
+│       │   │            - Default is (e.g., 'delta' + 'overwrite'), but customizable per step.
+│       ├── dq_checks.py
+│       │   ├─ (7) Data Quality checks:
+│       │   │      - Runs queries from the DQ folder (e.g. `row_count.sql`) to validate data.
+│       │   │      - Can raise exceptions if checks fail (like a row_count &lt; threshold).
+│       ├── metadata_logger.py
+│       │   ├─ (8) Pipeline metadata logging :
+│       │   │      - If you want to store pipeline run logs (those same JSON logs) into Delta tables.
+│       ├── datasource.py
+│       │   ├─ (9) DataSource class to manage all your JDBC (or other source) connection:
+│       │   │      - Centralizes connection config: connection string, username, password, etc.
+│       │   │      - Makes it easier to inject credentials from a secrets manager or .env
+│       │   │      - Can generate Spark-compatible .option() dictionaries or full configs
+│       └── __init__.py
+│           ├─ (10) Makes `utils/` an importable Python package 
+│               so modules can be imported like `from pipeline.utils import sql_loader`.
+
+├── sql/
+│   ├── bronze/
+│   │   ├── students.sql
+│   │   │   ├─ (11) Raw ingestion SQLs:
+│   │   │   │   - These scripts pull data directly from source systems (like JDBC databases).
+│   │   │   │   - Used in Bronze steps to land raw-but-structured data into your Lakehouse.
+│   │   │   │   - They usually do lightweight transformations like renaming columns or filtering bad records.
+│   │   │   │   - SQLs here assume your pipeline has already registered the raw input as a temp view (e.g., students).
+│   │   │   │   - Example: `SELECT * FROM students`
+│   │   └── schools.sql
+│   │       ├─ (12) Another raw load example for a different entity (schools).
+│   │       │      - Might use a different view or join source tables.
+│   │       │      - Helps standardize data before applying modeling logic in Silver.
+│
+│   ├── silver/
+│   │   ├── hub_student.sql
+│   │   ├── hub_school.sql
+│   │   ├── link_enrollment.sql
+│   │   └── sat_student_demographics.sql
+│   │       ├─ (13) Data Vault SQL scripts:
+│   │       |   - These model your data into **Hubs, Links, and Satellites** using the Data Vault pattern.
+│   │       |   - Typically work off the outputs of Bronze and turn them into deduplicated keys, relationships, and attributes.
+│   │       |   - Often use SQL constructs like `MERGE INTO` or `INSERT INTO SELECT DISTINCT`.
+│   │       |   - Assumes upstream views (like `students`) are pre-registered by the pipeline.
+│   │       |   - Example: `INSERT INTO hub_student SELECT DISTINCT student_id, load_date FROM students`
+│
+│   └── gold/
+│       ├── dim_student.sql
+│       ├── dim_school.sql
+│       └── fact_enrollment.sql
+│           ├─ (14) Star Schema SQLs for reporting:
+│           │   - These scripts build **dimension** and **fact** tables for analytics and dashboards.
+│           │   - They join and reshape the normalized Data Vault structures into flattened business entities.
+│           │   - They’re typically SELECT-heavy and may include surrogate key logic, aggregations, and business rules.
+│           │   - Example: `SELECT ROW_NUMBER() OVER (...) AS dim_student_id, ... FROM hub_student LEFT JOIN sat_student_demographics`
+
+├── dq/
+│   ├── bronze/
+│   │   ├── students/
+│   │   │   ├── row_count.sql
+│   │   │   └── not_null_studentid.sql
+│   │   │   ├─ (15) Data Quality checks for Bronze `students`:
+│   │   │   │      - Small SQL queries that validate data after it's written to its destination.
+│   │   │   │      - These checks run **after** the step finishes writing (via `dq_checks` in YAML).
+│   │   │   │      - Example: `row_count.sql` might contain `SELECT COUNT(*) FROM students WHERE some_col IS NOT NULL`
+│   │   │   │      - Example: `not_null_studentid.sql` checks for nulls in key fields (`student_id IS NOT NULL`)
+│   │   │   │      - You can configure multiple checks per step in your YAML config.
+│   │   └── schools/
+│   │       └── row_count.sql
+│   │       ├─ (16) Simple row count validation for `schools` ingestion.
+│   │       │      - These are often used to guard against empty data loads or corrupted files.
+│
+│   ├── silver/
+│   │   ├── hub_student/
+│   │   │   └── unique_keys.sql
+│   │   │   ├─ (17) Silver-level DQ check:
+│   │   │   │      - Verifies uniqueness of primary keys or business keys in Data Vault Hubs.
+│   │   │   │      - Example: `SELECT student_id, COUNT(*) FROM hub_student GROUP BY student_id HAVING COUNT(*) &gt; 1`
+│   │   ├── hub_school/
+│   │   │   └── (possible checks)
+│   │   ├── link_enrollment/
+│   │   │   └── (possible checks)
+│   │   └── sat_student_demographics/
+│   │       └── (possible checks)
+│   │       ├─ (18) Other optional Silver DQ:
+│   │       │      - Common examples: checking referential integrity, ensuring all fields have valid types, etc.
+│
+│   └── gold/
+│       ├── dim_student/
+│       │   └── not_null_dim_id.sql
+│       │   ├─ (19) Gold-level DQ:
+│       │   │      - Ensures all records in `dim_student` have a valid `dim_id`, which is crucial for joins in facts.
+│       │   │      - Example: `SELECT COUNT(*) FROM dim_student WHERE dim_student_id IS NULL`
+│       ├── dim_school/
+│       │   └── (possible checks)
+│       └── fact_enrollment/
+│           └── valid_dates.sql
+│           ├─ (20) Fact-level DQ:
+│           │      - Checks for data consistency and logic (e.g. `start_date &lt; end_date`)
+│           │      - Example: `SELECT COUNT(*) FROM fact_enrollment WHERE enrollment_date &gt; graduation_date`
+
+├── ingestion/
+│   ├── bronze/
+│   │   └── extract_students_jdbc.py
+│   │       ├─ (21) Bronze layer extractor for Ed-Fi `students` table:
+│   │       │      - Connects to the source SQL Server using JDBC.
+│   │       │      - Extracts the `Students` table from the Ed-Fi ODS.
+│   │       │      - Writes to Delta format at a raw layer (e.g., `/mnt/bronze/students`).
+│   │       │      - Can be reused across multiple pipelines or stages.
+│
+│   ├── silver/
+│   │   └── transform_hub_student.py
+│   │       ├─ (22) Silver layer transformer for `hub_student`:
+│   │       │      - Reads raw `students` data from Bronze.
+│   │       │      - Applies Data Vault hub logic to extract business keys.
+│   │       │      - Deduplicates keys and prepares a DataFrame for merging into the hub table.
+│   │       │      - Good candidate for unit testing key integrity and structure.
+│
+│   └── gold/
+│       └── build_dim_student_profile.py
+│           ├─ (23) Gold layer builder for `dim_student_profile`:
+│           │      - Joins multiple Silver layer outputs (e.g., `hub_student`, `sat_student_demographics`).
+│           │      - Flattens the structure into a dimension ready for reporting (e.g., Power BI or Looker).
+│           │      - Generates surrogate keys and computes derived fields like full name, status, etc.
+
+└── tests/
+    ├── test_dq.py
+    │   ├─ (24) Unit tests for `dq_checks.py`:
+    │   │      - Mocks a Spark session to simulate running DQ SQL checks.
+    │   │      - Validates behavior when queries return valid vs. invalid results.
+    │   │      - Tests that exceptions are raised for threshold violations.
+    │   │      - Can be extended to test multiple SQL files with parametrized cases (e.g., pytest.mark.parametrize).
+    │
+    ├── test_retry.py
+    │   ├─ (25) Unit tests for retry logic in `pipeline.py`:
+    │   │      - Mocks a step function that randomly fails to simulate retry scenarios.
+    │   │      - Ensures the pipeline attempts the correct number of retries before giving up.
+    │   │      - Verifies that retry-related logs are created and accurate.
+    │   │      - Can use time mocking or patching to avoid actual sleep delays.
+    │
+    ├── test_sql_loader.py
+    │   ├─ (26) Unit tests for `sql_loader.py`:
+    │   │      - Tests the Jinja2 rendering with various context dictionaries.
+    │   │      - Validates correct substitution of variables into SQL templates.
+    │   │      - Handles edge cases like missing variables, malformed syntax, etc.
+    │   │      - Uses sample `.sql` files or in-memory strings for isolated tests.
+    │
+    ├── test_checkpoints.py
+    │   ├─ (27) Tests for checkpointing logic in `pipeline.py`:
+    │   │      - Verifies `is_step_checkpointed()` behavior with/without marker files.
+    │   │      - Mocks filesystem interactions (e.g., `os.path.exists`) to simulate file states.
+    │   │      - Ensures `save_step_checkpoint()` writes the expected marker file correctly.
+    │   │      - Confirms that checkpointed steps are skipped during pipeline run.
+    │
+    ├── test_batch_id.py
+    │   ├─ (28) Tests for batch ID generation:
+    │   │      - Validates `batch_id` is pulled from config if present.
+    │   │      - Verifies fallback logic generates a timestamp-based ID when missing.
+    │   │      - Ensures batch_id is consistent throughout a pipeline run.
+    │
+    ├── test_pipeline_structure.py
+    │   ├─ (29) Validation of pipeline YAML structure:
+    │   │      - Verifies required keys exist in each step (e.g., `name`, `script`, `source`).
+    │   │      - Catches common YAML schema errors early (missing paths, bad formats).
+    │   │      - Can be used as part of CI/CD to lint the config before deployment.
+    │
+    └── __init__.py
+        ├─ (30) Marks the `tests/` folder as a Python test package:
+        │      - Enables pytest and other test runners to discover all test modules.
+        │      - May define global test fixtures or mocks shared across modules.
+
+└── run_pipeline.sh  
+    ├── A bash script located in the root directory that serves as a quick and convenient way to execute your ETL pipeline. It defaults to running the 'main_flow' pipeline if no argument is provided. The script:
+        - Stops execution on error to prevent cascading failures.
+        - Determines the pipeline name and corresponding YAML configuration.
+        - Announces the pipeline execution and the configuration file being used.
+        - Invokes the Python CLI (`pipelines/flows/main_flow.py`) with the specified config.
+
+</div></code></pre>
+<hr>
+<h2 id="4-example-mainflowyaml">4. Example: <code>main_flow.yaml</code></h2>
+<p>Below is an example of the <code>main_flow.yaml</code> file used to define your pipeline. This YAML file is the single source of truth for your ETL orchestration—laying out pipeline name, retry logic, notifications, checkpoints, stages, groups, and steps exactly as specified:</p>
+<pre class="hljs"><code><div><span class="hljs-attr">pipeline:</span>
+  <span class="hljs-attr">name:</span> <span class="hljs-string">edfi_etl_pipeline</span>  <span class="hljs-comment"># Unique name for this entire pipeline run</span>
+  <span class="hljs-attr">description:</span> <span class="hljs-string">"End-to-end ETL pipeline using Medallion Architecture with Data Vault and Star Schema"</span>  <span class="hljs-comment"># Quick summary of what this pipeline does</span>
+
+  <span class="hljs-attr">default_retry:</span>
+    <span class="hljs-attr">attempts:</span> <span class="hljs-number">3</span>            <span class="hljs-comment"># Retry failed steps up to 3 times</span>
+    <span class="hljs-attr">delay_seconds:</span> <span class="hljs-number">10</span>      <span class="hljs-comment"># Wait 10 seconds between retries</span>
+
+  <span class="hljs-attr">notifications:</span>
+    <span class="hljs-attr">on_failure:</span> <span class="hljs-string">Teams://#data-alerts</span>    <span class="hljs-comment"># Where to scream if something fails</span>
+    <span class="hljs-attr">on_success:</span> <span class="hljs-string">Teams://#data-success</span>   <span class="hljs-comment"># Where to celebrate success (optional, but cute)</span>
+
+  <span class="hljs-attr">checkpoint:</span>
+    <span class="hljs-attr">enabled:</span> <span class="hljs-literal">true</span>
+    <span class="hljs-attr">path:</span> <span class="hljs-string">"<span class="hljs-template-variable">{{base_path}}</span>/_checkpoints/<span class="hljs-template-variable">{{pipeline.name}}</span>"</span>  <span class="hljs-comment"># Where to store state/progress so restarts can resume intelligently</span>
+
+  <span class="hljs-attr">stages:</span>  <span class="hljs-comment"># Top-level ETL layers (Bronze, Silver, Gold)</span>
+    <span class="hljs-bullet">-</span> <span class="hljs-attr">name:</span> <span class="hljs-string">bronze</span>
+      <span class="hljs-attr">description:</span> <span class="hljs-string">"Raw ingestion from SQL Server to Delta Lake"</span>
+      <span class="hljs-attr">parallel:</span> <span class="hljs-literal">true</span>             <span class="hljs-comment"># Steps in this stage can run in parallel</span>
+      <span class="hljs-attr">depends_on:</span> <span class="hljs-string">[]</span>             <span class="hljs-comment"># This is the first stage—no upstream dependencies</span>
+
+      <span class="hljs-attr">groups:</span>
+        <span class="hljs-bullet">-</span> <span class="hljs-attr">name:</span> <span class="hljs-string">ingestion</span>        <span class="hljs-comment"># Logical group within the bronze stage</span>
+          <span class="hljs-attr">parallel:</span> <span class="hljs-literal">true</span>         <span class="hljs-comment"># These steps can also run in parallel</span>
+          <span class="hljs-attr">depends_on:</span> <span class="hljs-string">[]</span>         <span class="hljs-comment"># No dependencies—it's the start of the flow</span>
+
+          <span class="hljs-attr">steps:</span>
+            <span class="hljs-bullet">-</span> <span class="hljs-attr">name:</span> <span class="hljs-string">students</span>
+              <span class="hljs-attr">depends_on:</span> <span class="hljs-string">[]</span>     <span class="hljs-comment"># Doesn't depend on any other step</span>
+              <span class="hljs-attr">source:</span>
+                <span class="hljs-attr">datasource:</span> <span class="hljs-string">sqlserver_edfi</span>
+                <span class="hljs-attr">table:</span> <span class="hljs-string">dbo.Students</span>
+                <span class="hljs-attr">query:</span> <span class="hljs-string">"sql/<span class="hljs-template-variable">{{stage.name}}</span>/<span class="hljs-template-variable">{{name}}</span>.sql"</span>   <span class="hljs-comment"># External SQL file (templated for reusability)</span>
+              <span class="hljs-attr">destination:</span>
+                <span class="hljs-attr">format:</span> <span class="hljs-string">delta</span>
+                <span class="hljs-attr">path:</span> <span class="hljs-string">"<span class="hljs-template-variable">{{base_path}}</span>/<span class="hljs-template-variable">{{stage.name}}</span>/<span class="hljs-template-variable">{{name}}</span>"</span>  <span class="hljs-comment"># Where to write the data in the lake</span>
+              <span class="hljs-attr">dq_checks:</span>  <span class="hljs-comment"># Data quality validations to run post-write</span>
+                <span class="hljs-bullet">-</span> <span class="hljs-string">"dq/<span class="hljs-template-variable">{{stage.name}}</span>/<span class="hljs-template-variable">{{name}}</span>/row_count.sql"</span>
+                <span class="hljs-bullet">-</span> <span class="hljs-string">"dq/<span class="hljs-template-variable">{{stage.name}}</span>/<span class="hljs-template-variable">{{name}}</span>/not_null_studentid.sql"</span>
+
+            <span class="hljs-bullet">-</span> <span class="hljs-attr">name:</span> <span class="hljs-string">schools</span>
+              <span class="hljs-attr">depends_on:</span> <span class="hljs-string">[]</span>     <span class="hljs-comment"># Also independent</span>
+              <span class="hljs-attr">source:</span>
+                <span class="hljs-attr">datasource:</span> <span class="hljs-string">sqlserver_edfi</span>
+                <span class="hljs-attr">table:</span> <span class="hljs-string">dbo.Schools</span>
+                <span class="hljs-attr">query:</span> <span class="hljs-string">"sql/<span class="hljs-template-variable">{{stage.name}}</span>/<span class="hljs-template-variable">{{name}}</span>.sql"</span>
+              <span class="hljs-attr">destination:</span>
+                <span class="hljs-attr">format:</span> <span class="hljs-string">delta</span>
+                <span class="hljs-attr">path:</span> <span class="hljs-string">"<span class="hljs-template-variable">{{base_path}}</span>/<span class="hljs-template-variable">{{stage.name}}</span>/<span class="hljs-template-variable">{{name}}</span>"</span>
+              <span class="hljs-attr">dq_checks:</span>
+                <span class="hljs-bullet">-</span> <span class="hljs-string">"dq/<span class="hljs-template-variable">{{stage.name}}</span>/<span class="hljs-template-variable">{{name}}</span>/row_count.sql"</span>
+
+    <span class="hljs-bullet">-</span> <span class="hljs-attr">name:</span> <span class="hljs-string">silver</span>
+      <span class="hljs-attr">description:</span> <span class="hljs-string">"Refined Data Vault modeling"</span>
+      <span class="hljs-attr">parallel:</span> <span class="hljs-literal">false</span>            <span class="hljs-comment"># We'll run these groups sequentially</span>
+      <span class="hljs-attr">depends_on:</span> <span class="hljs-string">[bronze]</span>       <span class="hljs-comment"># Wait until bronze finishes</span>
+
+      <span class="hljs-attr">groups:</span>
+        <span class="hljs-bullet">-</span> <span class="hljs-attr">name:</span> <span class="hljs-string">hubs</span>
+          <span class="hljs-attr">parallel:</span> <span class="hljs-literal">true</span>         <span class="hljs-comment"># Hubs can be built in parallel</span>
+          <span class="hljs-attr">depends_on:</span> <span class="hljs-string">[bronze]</span>   <span class="hljs-comment"># Depends on raw data being ingested</span>
+
+          <span class="hljs-attr">steps:</span>
+            <span class="hljs-bullet">-</span> <span class="hljs-attr">name:</span> <span class="hljs-string">hub_student</span>
+              <span class="hljs-attr">depends_on:</span> <span class="hljs-string">[students]</span>  <span class="hljs-comment"># Needs student data ingested</span>
+              <span class="hljs-attr">source:</span>
+                <span class="hljs-attr">type:</span> <span class="hljs-string">delta</span>
+                <span class="hljs-attr">query:</span> <span class="hljs-string">"sql/<span class="hljs-template-variable">{{stage.name}}</span>/<span class="hljs-template-variable">{{name}}</span>.sql"</span>
+              <span class="hljs-attr">destination:</span>
+                <span class="hljs-attr">format:</span> <span class="hljs-string">delta</span>
+                <span class="hljs-attr">path:</span> <span class="hljs-string">"<span class="hljs-template-variable">{{base_path}}</span>/<span class="hljs-template-variable">{{stage.name}}</span>/<span class="hljs-template-variable">{{name}}</span>"</span>
+              <span class="hljs-attr">dq_checks:</span>
+                <span class="hljs-bullet">-</span> <span class="hljs-string">"dq/<span class="hljs-template-variable">{{stage.name}}</span>/<span class="hljs-template-variable">{{name}}</span>/unique_keys.sql"</span>
+
+            <span class="hljs-bullet">-</span> <span class="hljs-attr">name:</span> <span class="hljs-string">hub_school</span>
+              <span class="hljs-attr">depends_on:</span> <span class="hljs-string">[schools]</span>
+              <span class="hljs-attr">source:</span>
+                <span class="hljs-attr">type:</span> <span class="hljs-string">delta</span>
+                <span class="hljs-attr">query:</span> <span class="hljs-string">"sql/<span class="hljs-template-variable">{{stage.name}}</span>/<span class="hljs-template-variable">{{name}}</span>.sql"</span>
+              <span class="hljs-attr">destination:</span>
+                <span class="hljs-attr">format:</span> <span class="hljs-string">delta</span>
+                <span class="hljs-attr">path:</span> <span class="hljs-string">"<span class="hljs-template-variable">{{base_path}}</span>/<span class="hljs-template-variable">{{stage.name}}</span>/<span class="hljs-template-variable">{{name}}</span>"</span>
+
+        <span class="hljs-bullet">-</span> <span class="hljs-attr">name:</span> <span class="hljs-string">links</span>
+          <span class="hljs-attr">parallel:</span> <span class="hljs-literal">true</span>
+          <span class="hljs-attr">depends_on:</span> <span class="hljs-string">[hubs]</span>     <span class="hljs-comment"># Wait until all hubs are built</span>
+
+          <span class="hljs-attr">steps:</span>
+            <span class="hljs-bullet">-</span> <span class="hljs-attr">name:</span> <span class="hljs-string">link_enrollment</span>
+              <span class="hljs-attr">depends_on:</span> <span class="hljs-string">[hub_student,</span> <span class="hljs-string">hub_school]</span>  <span class="hljs-comment"># Join step needs both hubs</span>
+              <span class="hljs-attr">source:</span>
+                <span class="hljs-attr">type:</span> <span class="hljs-string">delta</span>
+                <span class="hljs-attr">query:</span> <span class="hljs-string">"sql/<span class="hljs-template-variable">{{stage.name}}</span>/<span class="hljs-template-variable">{{name}}</span>.sql"</span>
+              <span class="hljs-attr">destination:</span>
+                <span class="hljs-attr">format:</span> <span class="hljs-string">delta</span>
+                <span class="hljs-attr">path:</span> <span class="hljs-string">"<span class="hljs-template-variable">{{base_path}}</span>/<span class="hljs-template-variable">{{stage.name}}</span>/<span class="hljs-template-variable">{{name}}</span>"</span>
+
+        <span class="hljs-bullet">-</span> <span class="hljs-attr">name:</span> <span class="hljs-string">satellites</span>
+          <span class="hljs-attr">parallel:</span> <span class="hljs-literal">true</span>
+          <span class="hljs-attr">depends_on:</span> <span class="hljs-string">[links]</span>    <span class="hljs-comment"># Satellites extend the links, so wait for them</span>
+
+          <span class="hljs-attr">steps:</span>
+            <span class="hljs-bullet">-</span> <span class="hljs-attr">name:</span> <span class="hljs-string">sat_student_demographics</span>
+              <span class="hljs-attr">depends_on:</span> <span class="hljs-string">[link_enrollment]</span>
+              <span class="hljs-attr">source:</span>
+                <span class="hljs-attr">type:</span> <span class="hljs-string">delta</span>
+                <span class="hljs-attr">query:</span> <span class="hljs-string">"sql/<span class="hljs-template-variable">{{stage.name}}</span>/<span class="hljs-template-variable">{{name}}</span>.sql"</span>
+              <span class="hljs-attr">destination:</span>
+                <span class="hljs-attr">format:</span> <span class="hljs-string">delta</span>
+                <span class="hljs-attr">path:</span> <span class="hljs-string">"<span class="hljs-template-variable">{{base_path}}</span>/<span class="hljs-template-variable">{{stage.name}}</span>/<span class="hljs-template-variable">{{name}}</span>"</span>
+
+    <span class="hljs-bullet">-</span> <span class="hljs-attr">name:</span> <span class="hljs-string">gold</span>
+      <span class="hljs-attr">description:</span> <span class="hljs-string">"Star Schema for reporting"</span>
+      <span class="hljs-attr">parallel:</span> <span class="hljs-literal">false</span>
+      <span class="hljs-attr">depends_on:</span> <span class="hljs-string">[silver]</span>       <span class="hljs-comment"># Wait until silver layer is fully built</span>
+
+      <span class="hljs-attr">groups:</span>
+        <span class="hljs-bullet">-</span> <span class="hljs-attr">name:</span> <span class="hljs-string">dimensions</span>
+          <span class="hljs-attr">parallel:</span> <span class="hljs-literal">true</span>
+          <span class="hljs-attr">depends_on:</span> <span class="hljs-string">[satellites]</span>  <span class="hljs-comment"># Dimensions are built from refined satellite data</span>
+
+          <span class="hljs-attr">steps:</span>
+            <span class="hljs-bullet">-</span> <span class="hljs-attr">name:</span> <span class="hljs-string">dim_student</span>
+              <span class="hljs-attr">depends_on:</span> <span class="hljs-string">[sat_student_demographics]</span>  <span class="hljs-comment"># This fact depends on enriched student data</span>
+              <span class="hljs-attr">source:</span>
+                <span class="hljs-attr">type:</span> <span class="hljs-string">delta</span>
+                <span class="hljs-attr">query:</span> <span class="hljs-string">"sql/<span class="hljs-template-variable">{{stage.name}}</span>/<span class="hljs-template-variable">{{name}}</span>.sql"</span>
+              <span class="hljs-attr">destination:</span>
+                <span class="hljs-attr">format:</span> <span class="hljs-string">delta</span>
+                <span class="hljs-attr">path:</span> <span class="hljs-string">"<span class="hljs-template-variable">{{base_path}}</span>/<span class="hljs-template-variable">{{stage.name}}</span>/<span class="hljs-template-variable">{{name}}</span>"</span>
+              <span class="hljs-attr">dq_checks:</span>
+                <span class="hljs-bullet">-</span> <span class="hljs-string">"dq/<span class="hljs-template-variable">{{stage.name}}</span>/<span class="hljs-template-variable">{{name}}</span>/not_null_dim_id.sql"</span>
+
+            <span class="hljs-bullet">-</span> <span class="hljs-attr">name:</span> <span class="hljs-string">dim_school</span>
+              <span class="hljs-attr">depends_on:</span> <span class="hljs-string">[hub_school]</span>  <span class="hljs-comment"># Directly built from school hub</span>
+              <span class="hljs-attr">source:</span>
+                <span class="hljs-attr">type:</span> <span class="hljs-string">delta</span>
+                <span class="hljs-attr">query:</span> <span class="hljs-string">"sql/<span class="hljs-template-variable">{{stage.name}}</span>/<span class="hljs-template-variable">{{name}}</span>.sql"</span>
+              <span class="hljs-attr">destination:</span>
+                <span class="hljs-attr">format:</span> <span class="hljs-string">delta</span>
+                <span class="hljs-attr">path:</span> <span class="hljs-string">"<span class="hljs-template-variable">{{base_path}}</span>/<span class="hljs-template-variable">{{stage.name}}</span>/<span class="hljs-template-variable">{{name}}</span>"</span>
+
+        <span class="hljs-bullet">-</span> <span class="hljs-attr">name:</span> <span class="hljs-string">facts</span>
+          <span class="hljs-attr">parallel:</span> <span class="hljs-literal">true</span>
+          <span class="hljs-attr">depends_on:</span> <span class="hljs-string">[dimensions]</span>  <span class="hljs-comment"># Facts are last—they depend on dimensions</span>
+
+          <span class="hljs-attr">steps:</span>
+            <span class="hljs-bullet">-</span> <span class="hljs-attr">name:</span> <span class="hljs-string">fact_enrollment</span>
+              <span class="hljs-attr">depends_on:</span> <span class="hljs-string">[dim_student,</span> <span class="hljs-string">dim_school]</span>  <span class="hljs-comment"># Classic star schema join</span>
+              <span class="hljs-attr">source:</span>
+                <span class="hljs-attr">type:</span> <span class="hljs-string">delta</span>
+                <span class="hljs-attr">query:</span> <span class="hljs-string">"sql/<span class="hljs-template-variable">{{stage.name}}</span>/<span class="hljs-template-variable">{{name}}</span>.sql"</span>
+              <span class="hljs-attr">destination:</span>
+                <span class="hljs-attr">format:</span> <span class="hljs-string">delta</span>
+                <span class="hljs-attr">path:</span> <span class="hljs-string">"<span class="hljs-template-variable">{{base_path}}</span>/<span class="hljs-template-variable">{{stage.name}}</span>/<span class="hljs-template-variable">{{name}}</span>"</span>
+              <span class="hljs-attr">dq_checks:</span>
+                <span class="hljs-bullet">-</span> <span class="hljs-string">"dq/<span class="hljs-template-variable">{{stage.name}}</span>/<span class="hljs-template-variable">{{name}}</span>/valid_dates.sql"</span>
+  <span class="hljs-attr">datasources:</span>
+    <span class="hljs-attr">sqlserver_edfi:</span>
+      <span class="hljs-attr">type:</span> <span class="hljs-string">jdbc</span>
+      <span class="hljs-attr">url:</span> <span class="hljs-string">jdbc:sqlserver://your-sql-server:1433;databaseName=EdFi_Ods</span>
+      <span class="hljs-attr">user:</span> <span class="hljs-string">your_user</span>
+      <span class="hljs-attr">password:</span> <span class="hljs-string">your_password</span>
+      <span class="hljs-attr">driver:</span> <span class="hljs-string">com.microsoft.sqlserver.jdbc.SQLServerDriver</span>
+
+</div></code></pre>
+<hr>
+<h2 id="5-roadmap">5. Roadmap</h2>
+<h3 id="roadmap-for-mid-to-long-term-improvements">Roadmap for Mid-to-Long Term Improvements</h3>
+<p>This roadmap outlines strategic initiatives to enhance the data pipelines. It is designed to provide a robust, scalable solution that ensures reliable data ingestion, processing, governance, and operational excellence.</p>
+<ol>
+<li>
+<p><strong>Environment &amp; Configuration Management</strong></p>
+<ul>
+<li>Establish robust development, testing, and production environments.</li>
+<li>Manage configurations and secrets securely (e.g., via environment variables or Vault).</li>
+</ul>
+</li>
+<li>
+<p><strong>CI/CD Pipeline &amp; Automation</strong></p>
+<ul>
+<li>Define a deployment process with clear branching strategies and merge workflows.</li>
+<li>Implement automated testing (unit, integration, data validation) and versioning for both code and YAML configurations.</li>
+</ul>
+</li>
+<li>
+<p><strong>Data Governance &amp; Lineage</strong></p>
+<ul>
+<li>Implement a data catalog to track metadata, lineage, and business definitions.</li>
+<li>Ensure traceability from raw ingestion through transformation stages (Bronze → Silver → Gold).</li>
+</ul>
+</li>
+<li>
+<p><strong>Integration Contracts &amp; Data Vault Adaptation</strong></p>
+<ul>
+<li>Define clear integration contracts for Ed-Fi ODS and other educational data sources.</li>
+<li>Adapt Data Vault models for new SQL database platforms, including schema modifications and performance tuning.</li>
+</ul>
+</li>
+<li>
+<p><strong>Security &amp; Compliance by Design</strong></p>
+<ul>
+<li>Establish data classification standards, audit trails, and encryption protocols for sensitive data.</li>
+<li>Ensure compliance with educational data standards and regulations.</li>
+</ul>
+</li>
+<li>
+<p><strong>Monitoring &amp; Alerting</strong></p>
+<ul>
+<li>Set up real-time alerts (e.g., via Slack or email) for failures, slow queries, or anomalous behavior.</li>
+<li>Integrate operational metrics and dashboards (using tools such as Grafana or Datadog) for proactive monitoring.</li>
+</ul>
+</li>
+<li>
+<p><strong>Performance Tuning &amp; Resource Usage</strong></p>
+<ul>
+<li>Optimize Spark configurations (e.g., executor memory, partitions, shuffle settings) for efficiency.</li>
+<li>Apply effective caching strategies and partitioning techniques to manage large data sets.</li>
+</ul>
+</li>
+<li>
+<p><strong>Big Data Performance Testing</strong></p>
+<ul>
+<li>Generate synthetic datasets to simulate real-world data volumes for load and stress testing.</li>
+<li>Benchmark job execution times, memory usage, and resource utilization; integrate these tests into the CI/CD pipeline to detect regressions.</li>
+</ul>
+</li>
+<li>
+<p><strong>Advanced Scheduling &amp; Orchestration</strong></p>
+<ul>
+<li>Document triggers for scheduled or event-based pipeline runs (e.g., new file arrivals in blob storage).</li>
+<li>Update dependency graphs and refine workflow management practices as the pipeline evolves.</li>
+</ul>
+</li>
+<li>
+<p><strong>Backup &amp; Disaster Recovery</strong></p>
+<ul>
+<li>Establish robust checkpointing and recovery procedures to handle partial failures or data corruption.</li>
+<li>Develop an immutable storage strategy (e.g., using Delta tables) to ensure reliable data recovery.</li>
+</ul>
+</li>
+<li>
+<p><strong>Cloud Migration Testing</strong></p>
+<ul>
+<li>Formulate strategies to test the pipeline in cloud environments, ensuring performance parity and data integrity during migration.</li>
+<li>Validate resource allocation, network configurations, and data transfer consistency, with fallback procedures for migration issues.</li>
+</ul>
+</li>
+<li>
+<p><strong>Operational Playbook</strong></p>
+<ul>
+<li>Create detailed on-call procedures and incident management guidelines for rapid response.</li>
+<li>Outline performance testing protocols and escalation processes for system outages or failures.</li>
+</ul>
+</li>
+<li>
+<p><strong>FAQ / Troubleshooting Section</strong></p>
+<ul>
+<li>Compile common pitfalls (e.g., Spark memory issues, missing checkpoint files) along with quick fixes.</li>
+<li>Provide clear support channels and documentation for fast issue resolution.</li>
+</ul>
+</li>
+<li>
+<p><strong>Training &amp; Onboarding</strong></p>
+<ul>
+<li>Develop quick-start guides, video walkthroughs, and a repository of reusable code snippets and templates.</li>
+<li>Facilitate ongoing knowledge sharing to ensure new team members can quickly get up to speed.</li>
+</ul>
+</li>
+<li>
+<p><strong>Glossary &amp; Documentation Enhancements</strong></p>
+<ul>
+<li>Build a comprehensive glossary of key terms (e.g., Data Vault concepts, pipeline components) for easy reference.</li>
+<li>Maintain living documentation to ensure clarity and consistency across the project.</li>
+</ul>
+</li>
+<li>
+<p><strong>Enhancements Wishlist</strong></p>
+<ul>
+<li>Keep an evolving list of future features such as streaming ingestion, machine-learning-driven data quality checks, and additional data source integrations.</li>
+</ul>
+</li>
+</ol>
+<hr>
+<h2 id="6-conclusion">6. Conclusion</h2>
+<p>This project structure is designed to provide clarity, flexibility, and robustness to your ETL pipeline. By separating concerns across different directories and layers, it enables:</p>
+<ul>
+<li><strong>Modular development:</strong> Each component is isolated for easier maintenance and testing.</li>
+<li><strong>Scalability:</strong> The architecture supports adding new data sources, transformations, and quality checks with minimal disruption.</li>
+<li><strong>Transparency:</strong> Detailed logging and metadata capture make it easier to troubleshoot issues and analyze performance.</li>
+</ul>
+<p>Feel free to tweak or extend any component to suit your specific use case, and remember: a clean structure today saves you from headaches tomorrow!</p>
+<hr>
+<p><em>Enjoy building your pipeline and may your data always be as clean as your code!</em></p>
+
+</body>
+</html>

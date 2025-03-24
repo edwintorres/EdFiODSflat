@@ -29,8 +29,7 @@ pipeline:
             - name: students
               depends_on: []     # Doesn't depend on any other step
               source:
-                type: jdbc       # This is a JDBC read from SQL Server
-                connection: sqlserver_edfi
+                datasource: sqlserver_edfi
                 table: dbo.Students
                 query: "sql/{{stage.name}}/{{name}}.sql"   # External SQL file (templated for reusability)
               destination:
@@ -43,8 +42,7 @@ pipeline:
             - name: schools
               depends_on: []     # Also independent
               source:
-                type: jdbc
-                connection: sqlserver_edfi
+                datasource: sqlserver_edfi
                 table: dbo.Schools
                 query: "sql/{{stage.name}}/{{name}}.sql"
               destination:
@@ -158,3 +156,10 @@ pipeline:
                 path: "{{base_path}}/{{stage.name}}/{{name}}"
               dq_checks:
                 - "dq/{{stage.name}}/{{name}}/valid_dates.sql"
+  datasources:
+    sqlserver_edfi:
+      type: jdbc
+      url: jdbc:sqlserver://your-sql-server:1433;databaseName=EdFi_Ods
+      user: your_user
+      password: your_password
+      driver: com.microsoft.sqlserver.jdbc.SQLServerDriver
