@@ -117,6 +117,63 @@ Password: `edfi`
 
 ---
 
+## 🐘 Load the Ed-Fi Glendale Sample Database (PostgreSQL)
+
+Want a preloaded Ed-Fi database to play with? You got it, sugar. Just run one command and you’ll have a fully restored **Glendale v5.3** sample DB in your local PostgreSQL.
+
+### 📦 Step 1: Run the installer
+```bash
+./setup/install_edfi.sh
+```
+
+This script will:
+- 📥 Download the **Glendale v5.3** `.7z` backup (from Ed-Fi)
+- 🗜️ Extract the `.sql` file
+- 🐘 Restore the schema + sample data into your local `edfi_db` PostgreSQL database
+
+Your local DB config will be:
+| Setting     | Value        |
+|-------------|--------------|
+| Host        | `localhost`  |
+| Port        | `5432`       |
+| Database    | `edfi_db`    |
+| Username    | `xenda`      |
+| Password    | `Xenda123!`  |
+
+### 🔍 Step 2: Query the database
+
+To test from CLI:
+```bash
+PGPASSWORD='Xenda123!' psql -U xenda -d edfi_db -h localhost -c "SELECT * FROM edfi.student LIMIT 5;"
+```
+
+From Jupyter:
+```python
+import psycopg2
+
+conn = psycopg2.connect(
+    dbname="edfi_db",
+    user="xenda",
+    password="Xenda123!",
+    host="localhost",
+    port=5432
+)
+
+cursor = conn.cursor()
+cursor.execute("SELECT * FROM edfi.student LIMIT 5;")
+rows = cursor.fetchall()
+
+for row in rows:
+    print(row)
+
+cursor.close()
+conn.close()
+```
+---
+
+
+---
+
 ## 🧯 Trouble with WSL dropping you into root@...?
 
 Read this fix to avoid tool issues (Jupyter, SDKMAN, etc):
@@ -157,3 +214,8 @@ Happy coding! 💥
 
 ---
 sudo chown -R etorr:etorr /home/etorr/repos/EdFiODSflat
+
+
+
+
+

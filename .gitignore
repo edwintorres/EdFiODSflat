@@ -1,6 +1,9 @@
 spark-3.5.0-bin-hadoop3
 spark-3.5.0-bin-hadoop3.tgz.1
 
+
+sql/edfi_glendale
+
 logs/*
 
 # 🟫 Ignore all bronze output tables
