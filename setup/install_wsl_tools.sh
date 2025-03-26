@@ -138,8 +138,8 @@ To launch Jupyter:
 
 
 
-echo "🧪 Writing PySpark verification script..."
-cat << 'EOF' > ./script/test_pyspark_read.py
+echo "🧪 Writing PySpark verification scripts..."
+cat << 'EOF' > ./scripts/test_pyspark_read.py
 from pyspark.sql import SparkSession
 
 spark = SparkSession.builder.appName("Verify CSVs with Spark").getOrCreate()
@@ -163,7 +163,7 @@ finally:
 EOF
 
 echo "🚀 Running PySpark verification..."
-python3 ./script/test_pyspark_read.py || echo "⚠️ CSV test failed. Are your files in the current directory?"
+python3 ./scripts/test_pyspark_read.py || echo "⚠️ CSV test failed. Are your files in the current directory?"
 
 echo "🧼 Final cleanup..."
 sudo apt-get autoremove -y && sudo apt-get clean
@@ -197,6 +197,21 @@ sudo usermod -aG docker $USER
 echo "🧃 Docker installed. You may need to restart your WSL session or run: newgrp docker"
 
 
+echo "🐘 Installing PostgreSQL..."
+sudo apt-get install -y postgresql postgresql-contrib
+
+echo "🔧 Starting and enabling PostgreSQL..."
+sudo systemctl start postgresql
+sudo systemctl enable postgresql
+
+# 🔐 Create your custom target DB and user
+sudo -u postgres psql -c "CREATE USER xenda WITH PASSWORD 'Xenda123!';"
+sudo -u postgres psql -c "CREATE DATABASE xenda_db OWNER xenda;"
+
+echo "✅ Local PostgreSQL setup done. User: xenda, DB: xenda_db"
+
+
+
 echo "
 ✅ INSTALLATION COMPLETE
 
@@ -208,6 +223,7 @@ echo "
 📦 Jupyter Notebook + JupyterLab
 📦 Docker
 🧪 CSV Read Test
+🐘 PostgreSQL
 
 📚 To start Jupyter Notebook:
     cd ~/your/project/path
