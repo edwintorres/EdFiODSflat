@@ -12,8 +12,12 @@ DB_PASSWORD="Xenda123!"
 DB_HOST="localhost"
 DB_PORT="5432"
 
-mkdir -p "$BACKUP_DIR"
-cd "$BACKUP_DIR"
+PROJECT_ROOT="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
+FULL_BACKUP_DIR="$PROJECT_ROOT/$BACKUP_DIR"
+SQL_FILE="$FULL_BACKUP_DIR/$EXTRACTED_SQL"
+
+mkdir -p "$FULL_BACKUP_DIR"
+cd "$FULL_BACKUP_DIR"
 
 # 🧲 Download backup
 if [ ! -f "$BACKUP_NAME" ]; then
@@ -36,34 +40,19 @@ else
   echo "✅ SQL file already extracted."
 fi
 
+# ⚙️ Ensure postgres can access the folder
+chmod +x "$PROJECT_ROOT" "$PROJECT_ROOT/sql" "$FULL_BACKUP_DIR"
 
-
-
-
-# 🛠 Ensure the database exists
+# 💣 Drop & recreate database
 echo "🧙 Checking if database '$DB_NAME' exists..."
+sudo -u postgres psql -c "SELECT pg_terminate_backend(pid) FROM pg_stat_activity WHERE datname = '$DB_NAME';"
+sudo -u postgres dropdb --if-exists "$DB_NAME"
+echo "📗 Creating fresh database '$DB_NAME' owned by postgres..."
+sudo -u postgres createdb "$DB_NAME"
 
-DB_EXISTS=$(PGPASSWORD=$DB_PASSWORD psql -h $DB_HOST -p $DB_PORT -U $DB_USER -d postgres -tAc "SELECT 1 FROM pg_database WHERE datname='$DB_NAME'")
-
-if [ "$DB_EXISTS" != "1" ]; then
-    echo "📗 Database '$DB_NAME' not found. Creating it..."
-    sudo -u postgres createdb "$DB_NAME"
-else
-    echo "💣 Dropping database '$DB_NAME' if it exists..."
-    sudo -u postgres psql -c "SELECT pg_terminate_backend(pid) FROM pg_stat_activity WHERE datname = '$DB_NAME';"
-    sudo -u postgres dropdb --if-exists "$DB_NAME"
-    
-    echo "📗 Creating fresh database '$DB_NAME' owned by postgres..."
-    sudo -u postgres createdb "$DB_NAME"
-fi
-
-
-
-echo "📐 Ensuring 'edfi' schema exists and 'xenda' can use it..."
+# 🧱 Ensure schemas + access
+echo "📐 Ensuring schemas and privileges..."
 sudo -u postgres psql -d "$DB_NAME" <<EOF
-CREATE SCHEMA IF NOT EXISTS edfi AUTHORIZATION postgres;
-GRANT USAGE ON SCHEMA edfi TO xenda;
-GRANT CREATE ON SCHEMA edfi TO xenda;
 CREATE SCHEMA IF NOT EXISTS edfi AUTHORIZATION postgres;
 CREATE SCHEMA IF NOT EXISTS auth AUTHORIZATION postgres;
 CREATE SCHEMA IF NOT EXISTS interop AUTHORIZATION postgres;
@@ -73,17 +62,13 @@ GRANT CREATE ON SCHEMA edfi TO xenda;
 ALTER DEFAULT PRIVILEGES IN SCHEMA edfi GRANT ALL ON TABLES TO xenda;
 EOF
 
+# 🔌 Enable extensions (like pgcrypto)
+echo "🔌 Enabling required extensions..."
+sudo -u postgres psql -d "$DB_NAME" -c "CREATE EXTENSION IF NOT EXISTS o;"
 
-if [ -f "$EXTRACTED_SQL" ]; then
-  echo "💾 Restoring SQL into PostgreSQL ($DB_NAME)..."
-  PGPASSWORD=$DB_PASSWORD psql -h $DB_HOST -p $DB_PORT -U $DB_USER -d $DB_NAME -f "$EXTRACTED_SQL"
-  echo "🎉 Ed-Fi Glendale database restored successfully into $DB_NAME!"
-else
-  echo "❌ SQL file not found. Did the 7z extract fail?"
-  exit 1
-fi
-
-
-echo "🧼 Reassigning object ownership to user '$DB_USER'..."
-SQL_FILE="$(pwd)/$BACKUP_DIR/$EXTRACTED_SQL"
+# 💾 Restore SQL dump
+echo "💾 Restoring SQL into PostgreSQL ($DB_NAME)..."
 sudo -u postgres psql -d "$DB_NAME" -f "$SQL_FILE"
+
+echo "✅ Ed-Fi Glendale PostgreSQL DB restored successfully!"
+

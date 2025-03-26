@@ -119,19 +119,26 @@ Password: `edfi`
 
 ## 🐘 Load the Ed-Fi Glendale Sample Database (PostgreSQL)
 
-Want a preloaded Ed-Fi database to play with? You got it, sugar. Just run one command and you’ll have a fully restored **Glendale v5.3** sample DB in your local PostgreSQL.
+Want a fully-loaded **Ed-Fi ODS** to play with? Just run one command and *boom* — the **Glendale v5.3** sample data will be restored into your local PostgreSQL. 🎉
 
 ### 📦 Step 1: Run the installer
+
 ```bash
 ./setup/install_edfi.sh
 ```
 
 This script will:
-- 📥 Download the **Glendale v5.3** `.7z` backup (from Ed-Fi)
+
+- 📥 Download the **Glendale v5.3** `.7z` PostgreSQL dump
 - 🗜️ Extract the `.sql` file
-- 🐘 Restore the schema + sample data into your local `edfi_db` PostgreSQL database
+- 💣 Drop and recreate the `edfi_db` database
+- 🧱 Create required schemas (`edfi`, `auth`, `interop`, `util`)
+- 🔐 Create the `pgcrypto` extension
+- 🛡 Grant schema access to the `xenda` user
+- 💾 Restore all schema and sample data into `edfi_db` using `postgres`
 
 Your local DB config will be:
+
 | Setting     | Value        |
 |-------------|--------------|
 | Host        | `localhost`  |
@@ -140,14 +147,20 @@ Your local DB config will be:
 | Username    | `xenda`      |
 | Password    | `Xenda123!`  |
 
+> **Note:** If the DB already exists, it will be dropped and rebuilt from scratch. Don't store anything personal in there 💋
+
+---
+
 ### 🔍 Step 2: Query the database
 
-To test from CLI:
+#### 🐚 From CLI:
+
 ```bash
 PGPASSWORD='Xenda123!' psql -U xenda -d edfi_db -h localhost -c "SELECT * FROM edfi.student LIMIT 5;"
 ```
 
-From Jupyter:
+#### 🧪 From Jupyter / Python:
+
 ```python
 import psycopg2
 
@@ -169,7 +182,9 @@ for row in rows:
 cursor.close()
 conn.close()
 ```
+
 ---
+
 
 
 ---
